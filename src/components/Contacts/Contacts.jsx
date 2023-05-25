@@ -3,22 +3,15 @@ import { Contact } from './Contacts.styled'
 import { useSelector } from 'react-redux'
 // import PropTypes from 'prop-types';
 import { selectFilter } from 'redux/filterSlice'
-import { useGetPostsQuery } from '../../redux/contactsSlice'
-// import { selectFilteredContacts} from '../../redux/selectors';
+import { useGetContactsQuery } from '../../redux/contactsSlice'
 
 const Contacts = () => {
   const filter = useSelector(selectFilter)
   const normalizedFilter = filter.toLowerCase();
-  const { data: contacts, error, isLoading } = useGetPostsQuery();
+  const { data: contacts, error, isLoading } = useGetContactsQuery();
   
-  if (!contacts) {
-    return;
-  }
+  if (!contacts) { return; }
   const visibleContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter))
-  // console.log(selectFilteredContacts)
-  //contactsApi.endpoints.getPosts.useQuery()
-  // const test = useSelector(state => contactsApi.endpoints.getPosts.useQuery())
-  // console.log(filter)
 
   return (
     <Contact>
@@ -31,9 +24,6 @@ const Contacts = () => {
     </Contact>
   )
 };
-
-// {/* return <ContactItem key={id} id={id} name={name} number={phone} />; */}
-// <ContactItem key={contact.id} id={contact.id} name={contact.name} number={contact.phone} />
   
 export default Contacts;
 
