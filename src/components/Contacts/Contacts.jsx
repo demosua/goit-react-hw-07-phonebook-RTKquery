@@ -1,25 +1,33 @@
 import ContactItem from "../ContactItem";
 import { Contact } from './Contacts.styled'
- import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 // import PropTypes from 'prop-types';
-import { getFilter } from 'redux/filterSlice'
+import { selectFilter } from 'redux/filterSlice'
 import { useGetPostsQuery } from '../../redux/contactsSlice'
-
+// import { selectFilteredContacts} from '../../redux/selectors';
 
 const Contacts = () => {
-  const filter = useSelector(getFilter)
+  const filter = useSelector(selectFilter)
   const normalizedFilter = filter.toLowerCase();
   const { data: contacts, error, isLoading } = useGetPostsQuery();
-
-  !isLoading && contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter))
+  
+  if (!contacts) {
+    return;
+  }
+  const visibleContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter))
+  // console.log(selectFilteredContacts)
+  //contactsApi.endpoints.getPosts.useQuery()
+  // const test = useSelector(state => contactsApi.endpoints.getPosts.useQuery())
+  // console.log(filter)
 
   return (
     <Contact>
       {isLoading
         ? (<div>Loading...</div>)
-        : contacts.map(contact =>
+        : visibleContacts.map(contact =>
         (<ContactItem key={contact.id} contact={contact} />)
       )}
+      {error && <div>Error</div>}
     </Contact>
   )
 };

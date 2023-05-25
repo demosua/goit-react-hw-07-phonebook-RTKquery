@@ -1,12 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { filterChange, getFilter } from '../../redux/filterSlice'
+import { filterChange, selectFilter } from '../../redux/filterSlice'
 // import PropTypes from 'prop-types';
 import { Lbl, Inp } from './Filter.styled'
 
 const Filter = () => {
-  const filterValue = useSelector(getFilter)
+  const filterValue = useSelector(selectFilter)
   const dispatch = useDispatch()
+
   return (
     <>
       <Lbl htmlFor="">Find contacts by name</Lbl>
